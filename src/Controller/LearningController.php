@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Validator\Constraints\Date;
 
 class LearningController extends AbstractController
 {
@@ -49,14 +50,22 @@ class LearningController extends AbstractController
         ]);
     }
 
-    #[Route('/about-me', name: 'about-me')]
+    #[Route('/aboutMe', name: 'aboutMe')]
     public function aboutMe(): Response
     {
         $session = $this->requestStack->getSession();
-        $name = $session->get('name');
-        return $this->render('learning/index.html.twig', [
-            'name' => $name,
-        ]);
+        $name = $session->get('name', '');
+        if (empty($name))
+        {
+            return $this->forward('App\Controller\LearningController::showMyName');
+        }
+        else
+        {
+            return $this->render('learning/aboutMe.html.twig', [
+                'name' => $name,
+                'date' => date('Y/M/D'),
+            ]);
+        }
     }
 
     // wip redirect to /change-my-name. not sure I fully understand the requirement or why this is necessary

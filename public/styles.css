@@ -1,0 +1,21 @@
+body {
+  display: grid;
+  grid-template-columns: 2fr repeat(12, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+}
+
+.main {
+  grid-column-start: 2;
+  grid-column-end: 13;
+}
+
+aside {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  color: red;
+}
